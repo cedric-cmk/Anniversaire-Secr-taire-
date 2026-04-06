@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joyeux Anniversaire — NSIA Assurance Vie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f0f4fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .card-wrap {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #002244 0%, #004488 60%, #0066bb 100%);
+      border-radius: 20px 20px 0 0;
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -50px; right: -50px;
+      width: 200px; height: 200px;
+      background: rgba(255,200,0,0.1); border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -40px; left: -40px;
+      width: 160px; height: 160px;
+      background: rgba(255,255,255,0.04); border-radius: 50%;
+    }
+
+    .nsia-badge {
+      display: inline-block;
+      background: rgba(255,200,0,0.15);
+      border: 1px solid rgba(255,200,0,0.5);
+      color: #ffc800;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .avatar-circle {
+      width: 84px; height: 84px;
+      border-radius: 50%;
+      background: rgba(255,200,0,0.15);
+      border: 3px solid #ffc800;
+      margin: 0 auto 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 38px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(255,200,0,0.4); }
+      50% { box-shadow: 0 0 0 12px rgba(255,200,0,0); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.9rem;
+      color: #fff;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+    .hero h1 span { color: #ffc800; }
+
+    .hero .role {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem;
+      font-weight: 300;
+    }
+
+    .date-chip {
+      display: inline-block;
+      margin-top: 0.8rem;
+      background: #ffc800;
+      color: #002244;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 16px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .body-card {
+      background: #ffffff;
+      border: 1px solid #dce6f5;
+      border-top: none;
+      border-radius: 0 0 20px 20px;
+      padding: 1.6rem 1.5rem 2rem;
+      box-shadow: 0 8px 32px rgba(0,34,68,0.08);
+    }
+
+    .intro-text {
+      font-size: 0.93rem;
+      color: #444;
+      line-height: 1.75;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      padding: 0 0.3rem;
+    }
+    .intro-text strong { color: #002244; }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+      text-align: center;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 1.2rem;
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 0.9rem 0.5rem;
+      border-radius: 12px;
+      border: 1.5px solid #004488;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      font-family: 'Lato', sans-serif;
+    }
+    .action-btn:hover, .action-btn.active {
+      background: #002244;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,34,68,0.18);
+    }
+    .action-btn .icon { font-size: 24px; }
+    .action-btn .label {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #004488;
+      line-height: 1.3;
+    }
+    .action-btn:hover .label, .action-btn.active .label { color: #ffc800; }
+
+    .panel {
+      display: none;
+      background: #f4f8ff;
+      border: 1px solid #c5d8f0;
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 1.1rem;
+      animation: fadeIn 0.25s ease;
+    }
+    .panel.show { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #002244;
+      margin-bottom: 4px;
+      margin-top: 10px;
+    }
+    .panel label:first-child { margin-top: 0; }
+
+    .panel input, .panel select, .panel textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #b0c8e8;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: 'Lato', sans-serif;
+      background: #fff;
+      color: #002244;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .panel input:focus, .panel select:focus, .panel textarea:focus {
+      border-color: #004488;
+      box-shadow: 0 0 0 3px rgba(0,68,136,0.1);
+    }
+    .panel textarea { resize: none; height: 70px; }
+
+    .send-btn {
+      margin-top: 12px;
+      width: 100%;
+      padding: 11px;
+      background: #002244;
+      color: #ffc800;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .send-btn:hover { background: #004488; }
+
+    .success-msg {
+      display: none;
+      background: #e8f5ee;
+      border: 1px solid #a0d4b4;
+      border-radius: 10px;
+      padding: 0.9rem;
+      text-align: center;
+      color: #1a5e35;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 1.1rem;
+      animation: fadeIn 0.3s ease;
+    }
+    .success-msg.show { display: block; }
+
+    .bonne-semaine-box {
+      background: linear-gradient(135deg, #002244, #004488);
+      border-radius: 14px;
+      padding: 1.2rem 1.4rem;
+      text-align: center;
+      margin-top: 0.6rem;
+    }
+    .bsw-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      color: #ffc800;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .bsw-sub {
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .bsw-nsia {
+      color: rgba(255,200,0,0.55);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card-wrap">
+    <div class="hero">
+      <div class="nsia-badge">NSIA Assurance Vie</div>
+      <div class="avatar-circle">🎂</div>
+      <h1>C'est mon<br><span>Anniversaire !</span></h1>
+      <p class="role">Secrétaire NSIA Assurance Vie</p>
+      <span class="date-chip">🎉 Dimanche 12 Avril</span>
+    </div>
+
+    <div class="body-card">
+      <p class="intro-text">
+        En ce jour spécial, je suis heureuse de partager cet instant avec vous.<br>
+        <strong>Souhaitez-moi un joyeux anniversaire, profitez-en pour découvrir nos offres NSIA,</strong> et passez une belle semaine !
+      </p>
+
+      <div class="section-title">Que souhaitez-vous faire ?</div>
+
+      <div class="actions">
+        <button class="action-btn" id="btn-voeux" onclick="toggle('voeux')">
+          <span class="icon">🎊</span>
+          <span class="label">Lui souhaiter joyeux anniversaire</span>
+        </button>
+        <button class="action-btn" id="btn-contrat" onclick="toggle('contrat')">
+          <span class="icon">📋</span>
+          <span class="label">Souscrire ou compléter un contrat</span>
+        </button>
+        <button class="action-btn" id="btn-semaine" onclick="toggle('semaine')">
+          <span class="icon">🌟</span>
+          <span class="label">Lui souhaiter bonne semaine</span>
+        </button>
+      </div>
+
+      <div class="success-msg" id="success-voeux">🎊 Merci ! Votre message lui fera chaud au cœur.</div>
+      <div class="success-msg" id="success-contrat">✅ Votre demande a bien été transmise ! Elle vous recontactera très vite.</div>
+      <div class="success-msg" id="success-semaine">🌟 Merci ! Bonne semaine à vous aussi !</div>
+
+      <div class="panel" id="panel-voeux">
+        <label>Votre Nom et Prénom</label>
+        <input type="text" placeholder="Ex : Marie">
+        <label>Votre numéro de téléphone</label>
+        <input type="tel" placeholder="Ex : +229 01 97 00 00 00">
+        <label>Votre message</label>
+        <textarea placeholder="Joyeux anniversaire ! Je te souhaite..."></textarea>
+        <button class="send-btn" onclick="envoyer('voeux')">Envoyer mon message 🎂</button>
+      </div>
+
+      <div class="panel" id="panel-contrat">
+        <label>Votre nom complet</label>
+        <input type="text" placeholder="Ex : Jean KOCOU">
+        <label>Votre numéro de téléphone</label>
+        <input type="tel" placeholder="Ex : +229 97 00 00 00">
+        <label>Ma demande</label>
+        <select>
+          <option value="">-- Choisir --</option>
+          <option>Nouveau contrat d'assurance vie</option>
+          <option>Complément sur un contrat existant</option>
+          <option>Informations sur les offres NSIA</option>
+          <option>Modification de contrat</option>
+          <option>Autre demande</option>
+        </select>
+        <label>Précision (facultatif)</label>
+        <textarea placeholder="Décrivez brièvement votre besoin..."></textarea>
+        <button class="send-btn" onclick="envoyer('contrat')">Envoyer ma demande 📋</button>
+      </div>
+
+      <div class="panel" id="panel-semaine">
+        <label>Votre Nom et Prénom</label>
+        <input type="text" placeholder="Ex : Paul">
+        <label>Votre message (facultatif)</label>
+        <textarea placeholder="Bonne semaine et bon courage à toi !"></textarea>
+        <button class="send-btn" onclick="envoyer('semaine')">Envoyer 🌟</button>
+      </div>
+
+      <div class="bonne-semaine-box">
+        <div class="bsw-title">🌟 Bonne semaine productive à vous tous !</div>
+        <div class="bsw-sub">Mon anniversaire c'est ce dimanche 12 Avril —<br>mais toute la semaine, je suis là pour vous accompagner.</div>
+        <div class="bsw-nsia">NSIA Assurance Vie • Protégeons l'avenir ensemble</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Ton URL Google Apps Script mise à jour
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwg-2wEalPV9daRuPRoTn9R9k2ECx_p69KOCan84wTGGm_rgK5UmMhz-W0rKIp6fd52DA/exec";
+    var actif = null;
+
+    function toggle(s) {
+      var all = ['voeux', 'contrat', 'semaine'];
+      var btn = document.getElementById('btn-' + s);
+      var panel = document.getElementById('panel-' + s);
+      
+      if (actif === s) {
+        panel.classList.remove('show');
+        btn.classList.remove('active');
+        actif = null;
+      } else {
+        all.forEach(function(x) {
+          document.getElementById('panel-' + x).classList.remove('show');
+          document.getElementById('btn-' + x).classList.remove('active');
+        });
+        panel.classList.add('show');
+        btn.classList.add('active');
+        actif = s;
+      }
+    }
+
+    function envoyer(s) {
+      const panel = document.getElementById('panel-' + s);
+      const btn = panel.querySelector('.send-btn');
+      const originalText = btn.innerText;
+
+      let payload = { 
+        type: s,
+        nom: "",
+        message: "",
+        telephone: ""
+      };
+
+      if (s === 'voeux' || s === 'semaine') {
+        payload.nom = panel.querySelector('input').value;
+        payload.message = panel.querySelector('textarea').value;
+      } else if (s === 'contrat') {
+        payload.nom = panel.querySelector('input[type="text"]').value;
+        payload.telephone = panel.querySelector('input[type="tel"]').value;
+        const select = panel.querySelector('select').value;
+        const detail = panel.querySelector('textarea').value;
+        payload.message = "Option: " + select + " | Détails: " + detail;
+      }
+
+      if (!payload.nom) {
+        alert("Merci d'entrer votre nom/prénom.");
+        return;
+      }
+
+      btn.innerText = "Envoi en cours...";
+      btn.disabled = true;
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', 
+        cache: 'no-cache',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        panel.classList.remove('show');
+        document.getElementById('btn-' + s).classList.remove('active');
+        
+        var msgSuccess = document.getElementById('success-' + s);
+        msgSuccess.classList.add('show');
+        
+        panel.querySelectorAll('input, textarea, select').forEach(el => el.value = "");
+        btn.innerText = originalText;
+        btn.disabled = false;
+        actif = null;
+
+        setTimeout(function(){ window.location.href = 'merci.html'; }, 2000);
+      })
+      .catch(err => {
+        console.error("Erreur:", err);
+        alert("Une erreur est survenue lors de l'envoi.");
+        btn.innerText = originalText;
+        btn.disabled = false;
+      });
+    }
+  </script>
+</body>
+</html>
