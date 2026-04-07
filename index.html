@@ -275,6 +275,30 @@
       text-transform: uppercase;
       margin-top: 8px;
     }
+
+    .salutation-box {
+      background: linear-gradient(135deg, #004488, #0066bb);
+      color: #ffc800;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 4px 12px rgba(0,34,68,0.15);
+      animation: slideDown 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -290,18 +314,16 @@
     </div>
 
     <div class="body-card">
+      <div class="salutation-box" id="salutation"></div>
+      
       <p class="intro-text">
         En ce jour spécial, je suis heureuse de partager cet instant avec vous.<br>
-         
+        <strong>Souhaitez-moi un joyeux anniversaire, profitez-en pour découvrir nos offres NSIA,</strong> et passez une belle semaine !
       </p>
 
       <div class="section-title">Que souhaitez-vous faire ?</div>
 
       <div class="actions">
-        <button class="action-btn" id="btn-voeux" onclick="toggle('voeux')">
-          <span class="icon">🎊</span>
-          <span class="label">Lui souhaiter joyeux anniversaire</span>
-        </button>
         <button class="action-btn" id="btn-contrat" onclick="toggle('contrat')">
           <span class="icon">📋</span>
           <span class="label">Souscrire ou compléter un contrat</span>
@@ -312,19 +334,8 @@
         </button>
       </div>
 
-      <div class="success-msg" id="success-voeux">🎊 Merci ! Votre message lui fera chaud au cœur.</div>
       <div class="success-msg" id="success-contrat">✅ Votre demande a bien été transmise ! Elle vous recontactera très vite.</div>
       <div class="success-msg" id="success-semaine">🌟 Merci ! Bonne semaine à vous aussi !</div>
-
-      <div class="panel" id="panel-voeux">
-        <label>Votre Nom et Prénom</label>
-        <input type="text" placeholder="Ex : Marie">
-        <label>Votre numéro de téléphone</label>
-        <input type="tel" placeholder="Ex : +229 01 97 00 00 00">
-        <label>Votre message</label>
-        <textarea placeholder="Joyeux anniversaire ! Je te souhaite..."></textarea>
-        <button class="send-btn" onclick="envoyer('voeux')">Envoyer mon message 🎂</button>
-      </div>
 
       <div class="panel" id="panel-contrat">
         <label>Votre nom complet</label>
@@ -366,8 +377,22 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwg-2wEalPV9daRuPRoTn9R9k2ECx_p69KOCan84wTGGm_rgK5UmMhz-W0rKIp6fd52DA/exec";
     var actif = null;
 
+    function getSalutation() {
+      const hour = new Date().getHours();
+      if (hour >= 6 && hour < 12) return "☀️ Bonne journée !";
+      if (hour >= 12 && hour < 18) return "☀️ Bon après-midi !";
+      if (hour >= 18 && hour < 22) return "🌙 Bonne soirée !";
+      return "🌙 Bonne nuit !";
+    }
+
+    // Afficher la salutation dynamique au chargement
+    window.addEventListener('load', function() {
+      const salutation = getSalutation();
+      document.getElementById('salutation').innerText = salutation;
+    });
+
     function toggle(s) {
-      var all = ['voeux', 'contrat', 'semaine'];
+      var all = ['contrat', 'semaine'];
       var btn = document.getElementById('btn-' + s);
       var panel = document.getElementById('panel-' + s);
       
@@ -398,11 +423,7 @@
         telephone: ""
       };
 
-      if (s === 'voeux') {
-        payload.nom = panel.querySelector('input[type=\"text\"]').value;
-        payload.telephone = panel.querySelector('input[type=\"tel\"]').value;
-        payload.message = panel.querySelector('textarea').value;
-      } else if (s === 'contrat') {
+      if (s === 'contrat') {
         payload.nom = panel.querySelector('input[type=\"text\"]').value;
         payload.telephone = panel.querySelector('input[type=\"tel\"]').value;
         const select = panel.querySelector('select').value;
