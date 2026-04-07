@@ -398,15 +398,19 @@
         telephone: ""
       };
 
-      if (s === 'voeux' || s === 'semaine') {
-        payload.nom = panel.querySelector('input').value;
+      if (s === 'voeux') {
+        payload.nom = panel.querySelector('input[type=\"text\"]').value;
+        payload.telephone = panel.querySelector('input[type=\"tel\"]').value;
         payload.message = panel.querySelector('textarea').value;
       } else if (s === 'contrat') {
-        payload.nom = panel.querySelector('input[type="text"]').value;
-        payload.telephone = panel.querySelector('input[type="tel"]').value;
+        payload.nom = panel.querySelector('input[type=\"text\"]').value;
+        payload.telephone = panel.querySelector('input[type=\"tel\"]').value;
         const select = panel.querySelector('select').value;
         const detail = panel.querySelector('textarea').value;
         payload.message = "Option: " + select + " | Détails: " + detail;
+      } else if (s === 'semaine') {
+        payload.nom = panel.querySelector('input').value;
+        payload.message = panel.querySelector('textarea').value;
       }
 
       if (!payload.nom) {
